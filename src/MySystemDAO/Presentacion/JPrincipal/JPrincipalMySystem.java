@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import MySystemDAO.Presentacion.Empleado.VistaGeneralEmpleado;
+import MySystemDAO.Presentacion.Proyecto.VistaGeneralProyecto;
 
 /** 
  * <!-- begin-UML-doc -->
@@ -23,18 +24,7 @@ import MySystemDAO.Presentacion.Empleado.VistaGeneralEmpleado;
  */
 @SuppressWarnings("serial")
 public class JPrincipalMySystem extends JFrame {
-//	private V PanelCliente;
-//	/** 
-//	 * <!-- begin-UML-doc -->
-//	 * <!-- end-UML-doc -->
-//	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-//	 */
-//	private VistaGeneralFactura PanelFactura;
-//	/** 
-//	 * <!-- begin-UML-doc -->
-//	 * <!-- end-UML-doc -->
-//	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-//	 */
+
 	private JTabbedPane PanelPestañas;
 	/** 
 	 * <!-- begin-UML-doc -->
@@ -49,11 +39,7 @@ public class JPrincipalMySystem extends JFrame {
 //	 */
 	private VistaGeneralEmpleado PanelEmpleado;
 //	
-//	private VistaGeneralDepartamento PanelDepartamento;
-//	
-//	private VistaGeneralCurso PanelCurso;
-//	
-//	private VistaGeneralEmpleado PanelEmpleado;
+	private VistaGeneralProyecto PanelProyecto;
 
 	/** 
 	 * <!-- begin-UML-doc -->
@@ -102,6 +88,7 @@ public class JPrincipalMySystem extends JFrame {
 		PanelPrincipal = new javax.swing.JPanel();
 		PanelPestañas = new javax.swing.JTabbedPane();
 		PanelEmpleado = new VistaGeneralEmpleado();
+		PanelProyecto = new VistaGeneralProyecto();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,6 +103,7 @@ public class JPrincipalMySystem extends JFrame {
 		PanelPestañas.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
 
 		PanelPestañas.addTab("Empleado", PanelEmpleado);
+		PanelPestañas.addTab("Proyecto", PanelProyecto);
 
 		
 		javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(
