@@ -17,41 +17,14 @@ import javax.swing.JLabel;
  * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
  */
 public abstract class VentanaUpdateEmpleado extends JFrame {
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
+	
 	private static VentanaUpdateEmpleado uniqueInstance;
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private JTextField jTextField;
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private JButton jButton;
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private JLabel jLabel;
-
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @return
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
+	
 	public static VentanaUpdateEmpleado getInstance() {
 		// begin-user-code
-		// TODO Apéndice de método generado automáticamente
-		return null;
+		if (uniqueInstance == null)
+			uniqueInstance = new VentanaUpdateEmpleadoImp();
+		return uniqueInstance;
 		// end-user-code
 	}
 
@@ -60,7 +33,7 @@ public abstract class VentanaUpdateEmpleado extends JFrame {
 	 * <!-- end-UML-doc -->
 	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public abstract void update();
+	public abstract void update(Object data);
 	
 	public abstract Component initGUI();
 }

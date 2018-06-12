@@ -32,7 +32,7 @@ public class ComandoCreateEmpleado implements Comando {
 			responseContext = new Contexto(EventoNegocio.ALTA_EMPLEADO_EXITO, miEmp);
 		}
 		else{
-			responseContext = new Contexto(EventoNegocio.ALTA_EMPLEADO_FRACASO, miEmp);
+			responseContext = new Contexto(EventoNegocio.ALTA_EMPLEADO_FRACASO, null);
 		}
 		return responseContext;
 	}

@@ -28,7 +28,7 @@ public class ComandoReadProyecto implements Comando {
 			responseContext = new Contexto(EventoNegocio.READ_PROYECTO_EXITO, proy);
 		}
 		else{
-			responseContext = new Contexto(EventoNegocio.READ_PROYECTO_FRACASO, proy);
+			responseContext = new Contexto(EventoNegocio.READ_PROYECTO_FRACASO, null);
 		}
 		return responseContext;
 	}

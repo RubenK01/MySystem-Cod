@@ -31,7 +31,7 @@ public class ComandoReadAllProyectos implements Comando {
 			responseContext = new Contexto(EventoNegocio.READALL_PROYECTO_EXITO, misProyectos);
 		}
 		else{
-			responseContext = new Contexto(EventoNegocio.READALL_PROYECTO_FRACASO, misProyectos);
+			responseContext = new Contexto(EventoNegocio.READALL_PROYECTO_FRACASO, null);
 		}
 		return responseContext;
 	}

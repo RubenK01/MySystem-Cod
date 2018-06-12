@@ -15,6 +15,7 @@ import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoReadAllProyectos;
 import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoReadProyecto;
 import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoUpdateProyecto;
 import MySystemDAO.Presentacion.Controlador.Contexto;
+import MySystemDAO.Presentacion.Controlador.EventoGUI;
 
 /** 
  * <!-- begin-UML-doc -->
@@ -33,44 +34,44 @@ public class FactoriaComandosImp extends FactoriaComandos {
 		Comando command = null;
 		switch(evento) {
 			//empleados
-			case FactoriaComandos.COMANDO_CREATE_EMPLEADO:{
+			case EventoGUI.COMANDO_CREATE_EMPLEADO:{
 				command = new ComandoCreateEmpleado();
 				break;
 			}
-			case FactoriaComandos.COMANDO_DELETE_EMPLEADO:{
+			case EventoGUI.COMANDO_DELETE_EMPLEADO:{
 				command = new ComandoDeleteEmpleado();
 				break;
 			}
-			case FactoriaComandos.COMANDO_READ_EMPLEADO:{
+			case EventoGUI.COMANDO_READ_EMPLEADO:{
 				command = new ComandoReadEmpleado();
 				break;
 			}
-			case FactoriaComandos.COMANDO_READALL_EMPLEADO:{
+			case EventoGUI.COMANDO_READALL_EMPLEADO:{
 				command = new ComandoReadAllEmpleados();
 				break;
 			}
-			case FactoriaComandos.COMANDO_UPDATE_EMPLEADO:{
+			case EventoGUI.COMANDO_UPDATE_EMPLEADO:{
 				command = new ComandoUpdateEmpleado();
 				break;
 			}
 			//Proyectos
-			case FactoriaComandos.COMANDO_CREATE_PROYECTO:{
+			case EventoGUI.COMANDO_CREATE_PROYECTO:{
 				command = new ComandoCreateProyecto();
 				break;
 			}
-			case FactoriaComandos.COMANDO_DELETE_PROYECTO:{
+			case EventoGUI.COMANDO_DELETE_PROYECTO:{
 				command = new ComandoDeleteProyecto();
 				break;
 			}
-			case FactoriaComandos.COMANDO_READ_PROYECTO:{
+			case EventoGUI.COMANDO_READ_PROYECTO:{
 				command = new ComandoReadProyecto();
 				break;
 			}
-			case FactoriaComandos.COMANDO_READALL_PROYECTO:{
+			case EventoGUI.COMANDO_READALL_PROYECTO:{
 				command = new ComandoReadAllProyectos();
 				break;
 			}
-			case FactoriaComandos.COMANDO_UPDATE_PROYECTO:{
+			case EventoGUI.COMANDO_UPDATE_PROYECTO:{
 				command = new ComandoUpdateProyecto();
 				break;
 			}

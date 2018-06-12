@@ -26,7 +26,7 @@ public class ComandoUpdateProyecto implements Comando {
 		Contexto responseContext = null;
 		
 		if(rs){			
-			responseContext = new Contexto(EventoNegocio.UPDATE_PROYECTO_EXITO, null);
+			responseContext = new Contexto(EventoNegocio.UPDATE_PROYECTO_EXITO, rs);
 		}
 		else{
 			responseContext = new Contexto(EventoNegocio.UPDATE_PROYECTO_FRACASO, null);

@@ -25,7 +25,7 @@ public class ComandoDeleteProyecto implements Comando {
 		Contexto responseContext = null;
 		
 		if(rs){			
-			responseContext = new Contexto(EventoNegocio.DELETE_PROYECTO_EXITO, null);
+			responseContext = new Contexto(EventoNegocio.DELETE_PROYECTO_EXITO, rs);
 		}
 		else{
 			responseContext = new Contexto(EventoNegocio.DELETE_EMPLEADO_FRACASO, null);

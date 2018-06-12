@@ -22,29 +22,12 @@ public abstract class VentanaReadEmpleado extends JFrame {
 	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	private static VentanaReadEmpleado uniqueInstance;
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private JTextField jTextField;
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private JButton jButton;
-
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @return
-	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
+	
 	public static VentanaReadEmpleado getInstance() {
 		// begin-user-code
-		// TODO Apéndice de método generado automáticamente
-		return null;
+		if (uniqueInstance == null)
+			uniqueInstance = new VentanaReadEmpleadoImp();
+		return uniqueInstance;
 		// end-user-code
 	}
 
@@ -53,7 +36,7 @@ public abstract class VentanaReadEmpleado extends JFrame {
 	 * <!-- end-UML-doc -->
 	 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public abstract void update();
+	public abstract void update(Object data);
 	
 	public abstract Component initGUI();
 }

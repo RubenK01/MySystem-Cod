@@ -26,7 +26,7 @@ public class ComandoDeleteEmpleado implements Comando {
 		Contexto responseContext = null;
 		
 		if(res){			
-			responseContext = new Contexto(EventoNegocio.DELETE_EMPLEADO_EXITO, null);
+			responseContext = new Contexto(EventoNegocio.DELETE_EMPLEADO_EXITO, res);
 		}
 		else{
 			responseContext = new Contexto(EventoNegocio.DELETE_EMPLEADO_FRACASO, null);

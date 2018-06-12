@@ -15,15 +15,33 @@ public class TEmpleadoExterno extends TEmpleado {
 	private int idEmpleado;
 	private int duracion;
 
+	
+	public TEmpleadoExterno(TEmpleado emp) {
+		super(emp.getIdEmpleado(), emp.getNombre(), emp.getDni() , emp.getIdProyecto(), emp.getTipoEmpleado(), emp.getActivo());
+	}
+
 	public TEmpleadoExterno() {
 		super();
 	}
 
-	public TEmpleadoExterno(int idEmpleado, String nombre, String dni,
-			int idProyecto, String tipoEmpleado, Boolean activo,
-			int idEmpladoExterno, int duracion) {
+	
+
+	/**
+	 * @param idEmpleado
+	 * @param nombre
+	 * @param dni
+	 * @param idProyecto
+	 * @param tipoEmpleado
+	 * @param activo
+	 * @param idEmpladoExterno
+	 * @param idEmpleado2
+	 * @param duracion
+	 */
+	public TEmpleadoExterno(int idEmpleado, String nombre, String dni, int idProyecto, String tipoEmpleado,
+			Boolean activo, int idEmpladoExterno, int idEmpleado2, int duracion) {
 		super(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo);
 		this.idEmpladoExterno = idEmpladoExterno;
+		this.idEmpleado = idEmpleado2;
 		this.duracion = duracion;
 	}
 

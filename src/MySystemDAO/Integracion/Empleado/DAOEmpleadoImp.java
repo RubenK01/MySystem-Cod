@@ -33,7 +33,7 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 		
 		String nombre;
 		String dni;
-		int idProyecto;
+		int idProyecto, idEmpleado;
 		String tipoEmpleado;
 		boolean activo;
 		int duracion;
@@ -47,11 +47,12 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	           rs=stmt.executeQuery(sql);
 	       
 	    	if (rs.next()){
-	    		nombre = rs.getString(2);
-	    		dni = rs.getString(3);
-	    		idProyecto = rs.getInt(4);
-	    		tipoEmpleado = rs.getString(5);
-	    		activo = rs.getBoolean(6);
+	    		idEmpleado = rs.getInt("idEmpleado");
+	    		nombre = rs.getString("nombre");
+	    		dni = rs.getString("dni");
+	    		idProyecto = rs.getInt("idProyecto");
+	    		tipoEmpleado = rs.getString("tipoEmpleado");
+	    		activo = rs.getBoolean("activo");
 	    		
 	    		if(rs.getString("tipoEmpleado").equalsIgnoreCase("interno")){
 	    			
@@ -60,8 +61,26 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	    			
 	    			if (rs.next()){
     					costeFormacion = rs.getDouble("costeFormacion");
-    					miEmp = new TEmpleadoInterno(rs.getInt(1), nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"),costeFormacion);
+    					miEmp = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"), idEmpleado, costeFormacion);
 	    	        }
+	    			else {
+	    				TEmpleadoInterno empInterno = (TEmpleadoInterno) emp;
+	 	   			   	sql="INSERT INTO EmpleadosInternos(CosteFormacion,idEmpleado) VALUES ("+empInterno.getCosteFormacion()+","+emp.getIdEmpleado()+")";
+	 	   			   	stmt.executeUpdate(sql, com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
+		 	   			rs = stmt.getGeneratedKeys();
+		 	   			if (rs.next()) {
+		 	         	   //codigo = rs.getInt(1);
+		 	            }
+	 	   			   	
+			 	   		sql="SELECT * FROM EmpleadosInternos WHERE idEmpleado="+emp.getIdEmpleado();
+	        	        rs=stmt.executeQuery(sql);
+	        	        
+	        	        if(rs.next()) {
+	        	        	costeFormacion = rs.getDouble("costeFormacion");
+	    					miEmp = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"), idEmpleado, costeFormacion);
+	        	        }
+        	        
+	    			}
 	    		}
 	    		else if(rs.getString("tipoEmpleado").equalsIgnoreCase("externo")){
 	    			
@@ -70,8 +89,29 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	    			
 	    			if (rs.next()){
     					duracion = rs.getInt("duracion");
-    					miEmp = new TEmpleadoExterno(rs.getInt(1), nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"),duracion);
+    					miEmp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoExterno"), idEmpleado, duracion);
 	    	        }
+	    			else {
+	    				TEmpleadoExterno empExterno = (TEmpleadoExterno) emp;
+	 	   			   	sql="INSERT INTO EmpleadosExternos(Duracion,idEmpleado) VALUES ("+empExterno.getDuracion()+","+emp.getIdEmpleado()+")";
+	 	   			   	stmt.executeUpdate(sql, com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
+	 	   			   	
+	 	   			   	rs = stmt.getGeneratedKeys();
+		 	   			if (rs.next()) {
+		 	         	   //codigo = rs.getInt(1);
+		 	            }
+	 	   			   	
+	 	   			   	sql="SELECT * FROM EmpleadosExternos WHERE idEmpleado="+emp.getIdEmpleado();
+	        	        rs=stmt.executeQuery(sql);
+	        	        
+	        	        if(rs.next()) {
+	        	        	duracion = rs.getInt("duracion");
+	    					miEmp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoExterno"), idEmpleado, duracion);
+	        	        }
+	        	        
+	        	        
+	    			}
+	    			
 	    		}
 		        stmt.close();
 		        rs.close();
@@ -102,11 +142,12 @@ public class DAOEmpleadoImp implements DAOEmpleado {
         
 		try{
 			stmt = con.createStatement();
-			sql = "INSERT INTO Empleados(nombre, dni, idProyecto, activo) VALUES ('"
+			sql = "INSERT INTO Empleados(nombre, dni, idProyecto, activo, tipoEmpleado) VALUES ('"
 					+ emp.getNombre()+"','"
 					+ emp.getDni()+"',"
 					+ emp.getIdProyecto()+","
-					+ emp.getActivo()+")";
+					+ emp.getActivo()+",'"
+					+ emp.getTipoEmpleado()+"')";
 			stmt.executeUpdate(sql, com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
 		
 			
@@ -120,11 +161,11 @@ public class DAOEmpleadoImp implements DAOEmpleado {
            try{
 	   		   if (emp.getTipoEmpleado().equalsIgnoreCase("interno")){
 	   			   TEmpleadoInterno empInterno = (TEmpleadoInterno) emp;
-	   			   sql="INSERT INTO EmpleadosInternos(CosteFormacion,idEmpleadoInterno) VALUES ("+empInterno.getCosteFormacion()+","+codigo+")";
+	   			   sql="INSERT INTO EmpleadosInternos(CosteFormacion,idEmpleado) VALUES ("+empInterno.getCosteFormacion()+","+codigo+")";
 	   		   }
 	   		   else if (emp.getTipoEmpleado().equalsIgnoreCase("externo")){
 	   			   TEmpleadoExterno empExterno = (TEmpleadoExterno) emp;
-	   			   sql="INSERT INTO EmpleadosExternos(Duracion,idEmpleadoExterno) VALUES ("+empExterno.getDuracion()+","+codigo+")";
+	   			   sql="INSERT INTO EmpleadosExternos(Duracion,idEmpleado) VALUES ("+empExterno.getDuracion()+","+codigo+")";
 	   	           
 	   		   }
 	   		   stmt.executeUpdate(sql);
@@ -148,6 +189,7 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 		Connection con = null;
 		Statement stmt = null;
 		String sql = "";
+		ResultSet rs = null;
 		
 		Transaction transaction = TransactionManager.getInstance()
 				.getTransaction();
@@ -165,21 +207,41 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	        		   + "idProyecto="+emp.getIdProyecto()+","
 	        		   + "tipoEmpleado='"+emp.getTipoEmpleado()+"',"
 	        		   + "activo="+emp.getActivo()
-	        		   +"' WHERE idEmpleado="+emp.getIdEmpleado();
+	        		   + " WHERE idEmpleado="+emp.getIdEmpleado();
 	           stmt.executeUpdate(sql);
 	           resul=true;	           
 	    
 	           
 	           try{
 	        	   if (emp.getTipoEmpleado().equalsIgnoreCase("interno")){
+	        		   
 		   			   TEmpleadoInterno empInt = (TEmpleadoInterno) emp;
-		   			   sql="update EmpleadosInternos SET "
-		        		   + "costeFormacion="+empInt.getCosteFormacion()+" WHERE idEmpleado="+emp.getIdEmpleado();
+		   			   
+		   			   sql ="SELECT * from EmpleadosInternos WHERE idEmpleado=" + emp.getIdEmpleado();
+		   			   rs = stmt.executeQuery(sql);
+		   			   if(rs.next()) {
+		   				sql="update EmpleadosInternos SET "
+				        		   + "costeFormacion="+empInt.getCosteFormacion()+" WHERE idEmpleado="+emp.getIdEmpleado();
+		   			   }
+		   			   else {
+		   				sql="INSERT INTO EmpleadosInternos(CosteFormacion,idEmpleado) VALUES ("+empInt.getCosteFormacion()+","+emp.getIdEmpleado()+")";
+		   			   }
+		   			   
+		   			   
 		   		   }
 		   		   else if (emp.getTipoEmpleado().equalsIgnoreCase("externo")){
 		   			   TEmpleadoExterno empExt = (TEmpleadoExterno) emp;
-		   			   sql="update EmpleadosExternos SET "
-		        		   + "duracion="+empExt.getDuracion()+" WHERE idEmpleado="+emp.getIdEmpleado();
+		   			   
+		   			   sql ="SELECT * from EmpleadosInternos WHERE idEmpleado=" + emp.getIdEmpleado();
+		   			   rs = stmt.executeQuery(sql);
+		   			   if(rs.next()) {
+		   				 sql="update EmpleadosExternos SET "
+				        		   + "duracion="+empExt.getDuracion()+" WHERE idEmpleado="+emp.getIdEmpleado();
+		   			   }
+		   			   else {
+		   				sql="INSERT INTO EmpleadosExternos(duracion,idEmpleado) VALUES ("+empExt.getDuracion()+","+emp.getIdEmpleado()+")";
+		   			   }
+		   			  
 		   		   }
 		           stmt.executeUpdate(sql);
 		           resul=true;	           
@@ -258,20 +320,20 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	    	   
 	    	   //Aadimos a la lista todos los empleados encontrados en la base de datos.
 	    	   while(rs.next()){
-	        	    idEmpleado=rs.getInt(1);
-		       		nombre=rs.getString(2);
-		       		dni=rs.getString(3);
-		       		idProyecto=rs.getInt(4);
-		       		tipoEmpleado=rs.getString(5);
-		       		activo=rs.getBoolean(6);
+	    		   	idEmpleado = rs.getInt("idEmpleado");
+	    		   	nombre = rs.getString("nombre");
+		    		dni = rs.getString("dni");
+		    		idProyecto = rs.getInt("idProyecto");
+		    		tipoEmpleado = rs.getString("tipoEmpleado");
+		    		activo = rs.getBoolean("activo");
 		       		
-	        	   if (rs.getString(5).equalsIgnoreCase("interno")){
+	        	   if ("interno".equalsIgnoreCase(tipoEmpleado)){
 	        		   sql = "SELECT * FROM EmpleadosInternos WHERE idEmpleado="+rs.getInt("idEmpleado");
 	        		   rs2=stmt2.executeQuery(sql);
 	        		   if (rs2.next()){
-	        			   idEmpleadoInterno = rs2.getInt(1);
-	        			   costeFormacion = rs2.getDouble(2);
-	        	    	   TEmpleadoInterno auxmiempleado = new TEmpleadoInterno(idEmpleado,nombre,dni,idProyecto,tipoEmpleado,activo,idEmpleadoInterno,costeFormacion);
+	        			   idEmpleadoInterno = rs2.getInt("idEmpleadoInterno");
+	        			   costeFormacion = rs2.getDouble("costeFormacion");
+	        	    	   TEmpleadoInterno auxmiempleado = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, idEmpleadoInterno, idEmpleado, costeFormacion);
 	        	    	   miEmp = auxmiempleado;
 	        	    	   miEmp.setIdEmpleado(idEmpleado);
 	        	    	   misEmpleados.add(miEmp);
@@ -279,13 +341,13 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	    	        	   throw new ExcepcionIntegracion("No encuentro el empleado interno al listar");
 	    	           }
 	        	   }
-	        	   else if(rs.getString(5).equalsIgnoreCase("externo")){
+	        	   else if("externo".equalsIgnoreCase(tipoEmpleado)){
 	        		   sql = "SELECT * FROM EmpleadosExternos WHERE idEmpleado="+rs.getInt("idEmpleado");
 	        		   rs2=stmt2.executeQuery(sql);
 	        		   if (rs2.next()){
-	        			   idEmpleadoExterno = rs2.getInt(1);
-	        			   duracion = rs2.getInt(2);
-	        	    	   TEmpleadoExterno auxmiemp = new TEmpleadoExterno(idEmpleado,nombre,dni,idProyecto,tipoEmpleado,activo,idEmpleadoExterno,duracion);
+	        			   idEmpleadoExterno = rs2.getInt("idEmpleadoExterno");
+	        			   duracion = rs2.getInt("duracion");
+	        	    	   TEmpleadoExterno auxmiemp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, idEmpleadoExterno, idEmpleado, duracion);
 	        			   miEmp = auxmiemp;
 	        			   miEmp.setIdEmpleado(idEmpleado);
 	        			   misEmpleados.add(miEmp);
@@ -319,7 +381,7 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 		
 		String nombre;
 		String dni;
-		int idProyecto;
+		int idProyecto, idEmpleado;
 		String tipoEmpleado;
 		boolean activo;
 		int duracion;
@@ -329,34 +391,35 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 		 //:::COMPROBAMOS DE QUE TIPO DE empleado SE TRATA:::
 	    try{
 	    	stmt = con.createStatement();
-	           String sql="SELECT * FROM Empleados WHERE 'dni'='"+ emp.getDni()+"'";
+	           String sql="SELECT * FROM Empleados WHERE dni='"+ emp.getDni()+"'";
 	           rs=stmt.executeQuery(sql);
 	       
 	    	if (rs.next()){
-	    		nombre = rs.getString(2);
-	    		dni = rs.getString(3);
-	    		idProyecto = rs.getInt(4);
-	    		tipoEmpleado = rs.getString(5);
-	    		activo = rs.getBoolean(6);
+	    		idEmpleado = rs.getInt("idEmpleado");
+	    		nombre = rs.getString("nombre");
+	    		dni = rs.getString("dni");
+	    		idProyecto = rs.getInt("idProyecto");
+	    		tipoEmpleado = rs.getString("tipoEmpleado");
+	    		activo = rs.getBoolean("activo");
 	    		
 	    		if(tipoEmpleado.equalsIgnoreCase("interno")){
 	    			
-    				sql="SELECT * FROM EmpleadosInternos WHERE dni="+ emp.getDni();
+    				sql="SELECT * FROM EmpleadosInternos WHERE idEmpleado="+ idEmpleado;
         	        rs=stmt.executeQuery(sql);
 	    			
 	    			if (rs.next()){
     					costeFormacion = rs.getDouble("costeFormacion");
-    					miEmp = new TEmpleadoInterno(rs.getInt(1), nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"),costeFormacion);
+    					miEmp = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"), idEmpleado, costeFormacion);
 	    	        }
 	    		}
 	    		else if(tipoEmpleado.equalsIgnoreCase("externo")){
 	    			
-    				sql="SELECT * FROM EmpleadosExternos WHERE dni="+ emp.getDni();
+    				sql="SELECT * FROM EmpleadosExternos WHERE idEmpleado="+ idEmpleado;
         	        rs=stmt.executeQuery(sql);
 	    			
 	    			if (rs.next()){
     					duracion = rs.getInt("duracion");
-    					miEmp = new TEmpleadoExterno(rs.getInt(1), nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"),duracion);
+    					miEmp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoExterno"), idEmpleado, duracion);
 	    	        }
 	    		}
 		        stmt.close();
@@ -404,20 +467,20 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	    	   
 	    	   //Aadimos a la lista todos los empleados encontrados en la base de datos.
 	    	   while(rs.next()){
-	        	    idEmpleado=rs.getInt(1);
-		       		nombre=rs.getString(2);
-		       		dni=rs.getString(3);
-		       		idProyecto=rs.getInt(4);
-		       		tipoEmpleado=rs.getString(5);
-		       		activo=rs.getBoolean(6);
+	    		   	idEmpleado = rs.getInt("idEmpleado");
+	    		   	nombre = rs.getString("nombre");
+		    		dni = rs.getString("dni");
+		    		idProyecto = rs.getInt("idProyecto");
+		    		tipoEmpleado = rs.getString("tipoEmpleado");
+		    		activo = rs.getBoolean("activo");
 		       		
 	        	   if (rs.getString(5).equalsIgnoreCase("interno")){
 	        		   sql = "SELECT * FROM EmpleadosInternos WHERE idEmpleado="+rs.getInt("idEmpleado");
 	        		   rs2=stmt2.executeQuery(sql);
 	        		   if (rs2.next()){
-	        			   idEmpleadoInterno = rs2.getInt(1);
-	        			   costeFormacion = rs2.getDouble(2);
-	        	    	   TEmpleadoInterno auxmiempleado = new TEmpleadoInterno(idEmpleado,nombre,dni,idProyecto,tipoEmpleado,activo,idEmpleadoInterno,costeFormacion);
+	        			   idEmpleadoInterno = rs2.getInt("idEmpleadoInterno");
+	        			   costeFormacion = rs2.getDouble("costeFormacion");
+	        	    	   TEmpleadoInterno auxmiempleado = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, idEmpleadoInterno, idEmpleado, costeFormacion);
 	        	    	   miEmp = auxmiempleado;
 	        	    	   miEmp.setIdEmpleado(idEmpleado);
 	        	    	   misEmpleados.add(miEmp);
@@ -429,9 +492,9 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	        		   sql = "SELECT * FROM EmpleadosExternos WHERE idEmpleado="+rs.getInt("idEmpleado");
 	        		   rs2=stmt2.executeQuery(sql);
 	        		   if (rs2.next()){
-	        			   idEmpleadoExterno = rs2.getInt(1);
-	        			   duracion = rs2.getInt(2);
-	        	    	   TEmpleadoExterno auxmiemp = new TEmpleadoExterno(idEmpleado,nombre,dni,idProyecto,tipoEmpleado,activo,idEmpleadoExterno,duracion);
+	        			   idEmpleadoExterno = rs2.getInt("idEmpleadoExterno");
+	        			   duracion = rs2.getInt("duracion");
+	        	    	   TEmpleadoExterno auxmiemp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, idEmpleadoExterno, idEmpleado, duracion);
 	        			   miEmp = auxmiemp;
 	        			   miEmp.setIdEmpleado(idEmpleado);
 	        			   misEmpleados.add(miEmp);

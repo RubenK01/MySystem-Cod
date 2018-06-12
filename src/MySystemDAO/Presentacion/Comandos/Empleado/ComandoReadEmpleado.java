@@ -29,7 +29,7 @@ public class ComandoReadEmpleado implements Comando {
 			responseContext = new Contexto(EventoNegocio.READ_EMPLEADO_EXITO, emp);
 		}
 		else{
-			responseContext = new Contexto(EventoNegocio.READ_EMPLEADO_FRACASO, emp);
+			responseContext = new Contexto(EventoNegocio.READ_EMPLEADO_FRACASO, null);
 		}
 		return responseContext;
 	}

@@ -30,7 +30,7 @@ public class ComandoCreateProyecto implements Comando {
 			responseContext = new Contexto(EventoNegocio.ALTA_PROYECTO_EXITO, miProy);
 		}
 		else{
-			responseContext = new Contexto(EventoNegocio.ALTA_PROYECTO_FRACASO, miProy);
+			responseContext = new Contexto(EventoNegocio.ALTA_PROYECTO_FRACASO, null);
 		}
 		return responseContext;
 	}

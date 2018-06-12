@@ -44,6 +44,7 @@ public class SAEmpleadoImp implements SAEmpleado {
 				}
 				else if (miEmp != null && miEmp.getActivo() == false){
 					emp.setActivo(true);
+					emp.setIdEmpleado(miEmp.getIdEmpleado());
 					if(daoEmp.updateEmpleado(emp)){
 						codigo = 0;
 						t.commit();

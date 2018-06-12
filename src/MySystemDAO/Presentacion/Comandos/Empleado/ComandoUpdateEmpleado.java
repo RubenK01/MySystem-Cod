@@ -26,7 +26,7 @@ public class ComandoUpdateEmpleado implements Comando {
 		Contexto responseContext = null;
 		
 		if(rs){			
-			responseContext = new Contexto(EventoNegocio.UPDATE_EMPLEADO_EXITO, null);
+			responseContext = new Contexto(EventoNegocio.UPDATE_EMPLEADO_EXITO, rs);
 		}
 		else{
 			responseContext = new Contexto(EventoNegocio.UPDATE_EMPLEADO_FRACASO, null);
