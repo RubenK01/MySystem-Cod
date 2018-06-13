@@ -17,6 +17,8 @@ public class EventoNegocio {
 	public static final int UPDATE_EMPLEADO_EXITO = 108;
 	public static final int UPDATE_EMPLEADO_FRACASO = 109;
 	
+	public static final int READ_EMPLEADOS_BY_PROYECTO = 120;
+	
 	//Proyecto
 	public static final int ALTA_PROYECTO_EXITO = 110;
 	public static final int ALTA_PROYECTO_FRACASO = 111;
@@ -32,4 +34,6 @@ public class EventoNegocio {
 	
 	public static final int UPDATE_PROYECTO_EXITO = 118;
 	public static final int UPDATE_PROYECTO_FRACASO = 119;
+	
+	public static final int READ_PROYECTOS_TRES_EMPLEADOS = 121;
 }	

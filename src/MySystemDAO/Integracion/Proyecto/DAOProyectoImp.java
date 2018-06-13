@@ -40,7 +40,7 @@ public class DAOProyectoImp implements DAOProyecto {
 			stmt = con.createStatement();
 	           sql="insert into Proyectos(idProyecto,nombre,idJefe,activo,coste) "
 	           		+ "values("+p.getIdProyecto()+",'"+p.getNombre()+"', "+p.getIdJefe()+", "
-	           		+ "'"+p.getActivo()+"','"+p.getCoste()+"')";
+	           		+ p.getActivo()+","+p.getCoste()+")";
 	           stmt.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
 	       
 	           
@@ -50,7 +50,7 @@ public class DAOProyectoImp implements DAOProyecto {
 	           if (rs.next()) {
 	        	   codigo = rs.getInt(1);
 	           } else {
-	        	   //Manejar la excepcin
+	        	   throw new ExcepcionIntegracion("No se pudo insertar el proyecto correctamente.");
 	           }
 		       stmt.close();
 		       rs.close();
@@ -235,7 +235,7 @@ public class DAOProyectoImp implements DAOProyecto {
 			       
 	       try{
 	    	   stmt = con.createStatement();
-	           String sql="SELECT * FROM Proyectos WHERE nombre="+p.getNombre();
+	           String sql="SELECT * FROM Proyectos WHERE nombre='"+p.getNombre() +"';";
 	           rs=stmt.executeQuery(sql);
 	       
 	           if (rs.next()){

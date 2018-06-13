@@ -16,6 +16,8 @@ public class VistaGeneralEmpleado extends JPanel {
 	
 	private JButton botonDetalleEmpleado;
 	
+	private JButton botonEmpleadosPorProyecto;
+	
 	private JPanel PanelDerecha;
 	
 	private JPanel PanelBotones;
@@ -36,6 +38,7 @@ public class VistaGeneralEmpleado extends JPanel {
 		botonAltaEmpleado = new javax.swing.JButton();
 		botonBajaEmpleado = new javax.swing.JButton();
 		botonListarEmpleado = new javax.swing.JButton();
+		botonEmpleadosPorProyecto = new javax.swing.JButton();
 		botonModificarEmpleado = new javax.swing.JButton();
 		botonDetalleEmpleado = new javax.swing.JButton();
 		PanelDerecha = new javax.swing.JPanel();
@@ -107,6 +110,20 @@ public class VistaGeneralEmpleado extends JPanel {
 						botonListarEmpleadoActionPerformed(evt);
 					}
 				});
+		
+		
+		botonEmpleadosPorProyecto.setBackground(new java.awt.Color(255, 102, 0));
+		botonEmpleadosPorProyecto.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+		botonEmpleadosPorProyecto.setText("EmpleadosByProyecto");
+		botonEmpleadosPorProyecto
+				.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1,
+						1, new java.awt.Color(255, 102, 0)));
+		botonEmpleadosPorProyecto
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						botonListarEmpleadosPorProyectoActionPerformed(evt);
+					}
+				});
 
 
 		javax.swing.GroupLayout PanelBotonesLayout = new javax.swing.GroupLayout(
@@ -130,6 +147,11 @@ public class VistaGeneralEmpleado extends JPanel {
 																		.createParallelGroup(
 																				javax.swing.GroupLayout.Alignment.LEADING,
 																				false)
+																		.addComponent(
+																				botonEmpleadosPorProyecto,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				129,
+																				Short.MAX_VALUE)
 																		.addComponent(
 																				botonListarEmpleado,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -196,6 +218,12 @@ public class VistaGeneralEmpleado extends JPanel {
 														.addGap(18, 18, 18)
 														.addComponent(
 																botonListarEmpleado,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																37,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addGap(18, 18, 18)
+														.addComponent(
+																botonEmpleadosPorProyecto,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																37,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,6 +353,16 @@ public class VistaGeneralEmpleado extends JPanel {
 		PanelDerecha.repaint();
 		PanelDerecha.revalidate();
 		PanelDerecha.add(VentanaReadAllEmpleados.getInstance().initGUI());
+		this.add(PanelDerecha);
+		// end-user-code
+	}
+	
+	protected void botonListarEmpleadosPorProyectoActionPerformed(ActionEvent evt) {
+		// begin-user-code		
+		PanelDerecha.removeAll();
+		PanelDerecha.repaint();
+		PanelDerecha.revalidate();
+		PanelDerecha.add(VentanaReadEmpleadosByProyecto.getInstance().initGUI());
 		this.add(PanelDerecha);
 		// end-user-code
 	}

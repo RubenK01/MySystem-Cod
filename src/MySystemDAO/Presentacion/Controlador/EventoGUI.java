@@ -10,6 +10,7 @@ public class EventoGUI {
 	public static final int COMANDO_UPDATE_EMPLEADO = 1002;
 	public static final int COMANDO_DELETE_EMPLEADO = 1003;
 	public static final int COMANDO_READALL_EMPLEADO = 1004;
+	public static final int COMANDO_READ_EMPLEADOS_BY_PROYECTO = 1010;
 	
 	//Proyectos
 	public static final int COMANDO_CREATE_PROYECTO = 1005;
@@ -17,4 +18,5 @@ public class EventoGUI {
 	public static final int COMANDO_UPDATE_PROYECTO = 1007;
 	public static final int COMANDO_DELETE_PROYECTO = 1008;
 	public static final int COMANDO_READALL_PROYECTO = 1009;
+	public static final int COMANDO_READ_PROYECTOS_TRES_EMPLEADOS = 1011;
 }

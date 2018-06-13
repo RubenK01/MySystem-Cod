@@ -8,9 +8,11 @@ import MySystemDAO.Presentacion.Comandos.Empleado.ComandoCreateEmpleado;
 import MySystemDAO.Presentacion.Comandos.Empleado.ComandoDeleteEmpleado;
 import MySystemDAO.Presentacion.Comandos.Empleado.ComandoReadAllEmpleados;
 import MySystemDAO.Presentacion.Comandos.Empleado.ComandoReadEmpleado;
+import MySystemDAO.Presentacion.Comandos.Empleado.ComandoReadEmpleadosPorProyecto;
 import MySystemDAO.Presentacion.Comandos.Empleado.ComandoUpdateEmpleado;
 import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoCreateProyecto;
 import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoDeleteProyecto;
+import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoProyectosTresEmpleados;
 import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoReadAllProyectos;
 import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoReadProyecto;
 import MySystemDAO.Presentacion.Comandos.Proyecto.ComandoUpdateProyecto;
@@ -73,6 +75,14 @@ public class FactoriaComandosImp extends FactoriaComandos {
 			}
 			case EventoGUI.COMANDO_UPDATE_PROYECTO:{
 				command = new ComandoUpdateProyecto();
+				break;
+			}
+			case EventoGUI.COMANDO_READ_EMPLEADOS_BY_PROYECTO:{
+				command = new ComandoReadEmpleadosPorProyecto();
+				break;
+			}
+			case EventoGUI.COMANDO_READ_PROYECTOS_TRES_EMPLEADOS:{
+				command = new ComandoProyectosTresEmpleados();
 				break;
 			}
 		}

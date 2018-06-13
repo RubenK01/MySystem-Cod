@@ -36,7 +36,7 @@ public class ListarProyectosConTresEmpleados implements Query {
 		
 	    try{
 	    	stmt = con.createStatement();
-	           sql = "SELECT * FROM Proyectos INNER JOIN (SELECT 'idProyecto', count(*) as cant "+
+	           sql = "SELECT * FROM Proyectos INNER JOIN (SELECT idProyecto, count(*) as cant "+
 	        		   "from Empleados group by idProyecto) TablaEmp on Proyectos.idProyecto = TablaEmp.idProyecto HAVING cant = 3; ";
 	           rs=stmt.executeQuery(sql);
 	    

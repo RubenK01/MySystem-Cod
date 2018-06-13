@@ -22,6 +22,8 @@ public class VistaGeneralProyecto extends JPanel {
 	
 	private JButton botonDetalleProyecto;
 	
+	private JButton botonProyectoQuery;
+	
 	private JPanel PanelDerecha;
 	
 	private JPanel PanelBotones;
@@ -42,6 +44,7 @@ public class VistaGeneralProyecto extends JPanel {
 		botonAltaProyecto = new javax.swing.JButton();
 		botonBajaProyecto = new javax.swing.JButton();
 		botonListarProyecto = new javax.swing.JButton();
+		botonProyectoQuery = new javax.swing.JButton();
 		botonModificarProyecto = new javax.swing.JButton();
 		botonDetalleProyecto = new javax.swing.JButton();
 		PanelDerecha = new javax.swing.JPanel();
@@ -113,6 +116,18 @@ public class VistaGeneralProyecto extends JPanel {
 						botonListarProyectoActionPerformed(evt);
 					}
 				});
+		botonProyectoQuery.setBackground(new java.awt.Color(255, 102, 0));
+		botonProyectoQuery.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+		botonProyectoQuery.setText("Query");
+		botonProyectoQuery
+				.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1,
+						1, new java.awt.Color(255, 102, 0)));
+		botonProyectoQuery
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						botonProyectoQueryActionPerformed(evt);
+					}
+				});
 
 
 		javax.swing.GroupLayout PanelBotonesLayout = new javax.swing.GroupLayout(
@@ -136,6 +151,11 @@ public class VistaGeneralProyecto extends JPanel {
 																		.createParallelGroup(
 																				javax.swing.GroupLayout.Alignment.LEADING,
 																				false)
+																		.addComponent(
+																				botonProyectoQuery,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				129,
+																				Short.MAX_VALUE)
 																		.addComponent(
 																				botonListarProyecto,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -202,6 +222,12 @@ public class VistaGeneralProyecto extends JPanel {
 														.addGap(18, 18, 18)
 														.addComponent(
 																botonListarProyecto,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																37,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addGap(18, 18, 18)
+														.addComponent(
+																botonProyectoQuery,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																37,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,6 +360,17 @@ public class VistaGeneralProyecto extends JPanel {
 		this.add(PanelDerecha);
 		// end-user-code
 	}
+	
+	protected void botonProyectoQueryActionPerformed(ActionEvent evt) {
+		// begin-user-code		
+		PanelDerecha.removeAll();
+		PanelDerecha.repaint();
+		PanelDerecha.revalidate();
+		PanelDerecha.add(VentanaReadProyectosTresEmp.getInstance().initGUI());
+		this.add(PanelDerecha);
+		// end-user-code
+	}
+
 
 
 	/** 

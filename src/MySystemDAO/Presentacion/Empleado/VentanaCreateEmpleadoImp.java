@@ -128,7 +128,13 @@ public class VentanaCreateEmpleadoImp extends VentanaCreateEmpleado{
             		trEmpleado.setNombre(jTextFieldNombreAltaEmpleado.getText());
             		trEmpleado.setDni(jTextFieldDNIAltaEmpleado.getText());
             		trEmpleado.setActivo(true);
-            		trEmpleado.setIdProyecto(Integer.parseInt(textFieldIdProyecto.getText()));
+            		
+            		if(textFieldIdProyecto.getText().compareTo("") == 0) {
+            			trEmpleado.setIdProyecto(0);
+            		}
+            		else {
+            			trEmpleado.setIdProyecto(Integer.parseInt(textFieldIdProyecto.getText()));
+            		}
             		trEmpleado.setTipoEmpleado(tipoEmpleado);
             		if("interno".equalsIgnoreCase(tipoEmpleado)) {
             			trEmpleado =  new TEmpleadoInterno(trEmpleado);
@@ -281,11 +287,17 @@ public class VentanaCreateEmpleadoImp extends VentanaCreateEmpleado{
 	@Override
 	public void update(Object datos) {
 		if (datos != null){
-			JOptionPane.showMessageDialog(null, "Empleado creado con exito con el ID: " + ((TEmpleado)datos).getIdEmpleado());
+			if(((TEmpleado)datos).getIdEmpleado() > 0){
+				JOptionPane.showMessageDialog(null, "Empleado creado con exito con el ID: " + ((TEmpleado)datos).getIdEmpleado());
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "El empleado con el dni introducido ya existía y se ha procedido a dar de alta con los nuevos datos. ");
+			}
+			
 			PanelAltaEmpleado.setVisible(false);
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "Error al crear empleado.");
+			JOptionPane.showMessageDialog(null, "Error al crear empleado, verificar si el dni ya está dado de alta.");
 		}
 		
 	}

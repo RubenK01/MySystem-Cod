@@ -63,24 +63,24 @@ public class DAOEmpleadoImp implements DAOEmpleado {
     					costeFormacion = rs.getDouble("costeFormacion");
     					miEmp = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"), idEmpleado, costeFormacion);
 	    	        }
-	    			else {
-	    				TEmpleadoInterno empInterno = (TEmpleadoInterno) emp;
-	 	   			   	sql="INSERT INTO EmpleadosInternos(CosteFormacion,idEmpleado) VALUES ("+empInterno.getCosteFormacion()+","+emp.getIdEmpleado()+")";
-	 	   			   	stmt.executeUpdate(sql, com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
-		 	   			rs = stmt.getGeneratedKeys();
-		 	   			if (rs.next()) {
-		 	         	   //codigo = rs.getInt(1);
-		 	            }
-	 	   			   	
-			 	   		sql="SELECT * FROM EmpleadosInternos WHERE idEmpleado="+emp.getIdEmpleado();
-	        	        rs=stmt.executeQuery(sql);
-	        	        
-	        	        if(rs.next()) {
-	        	        	costeFormacion = rs.getDouble("costeFormacion");
-	    					miEmp = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"), idEmpleado, costeFormacion);
-	        	        }
-        	        
-	    			}
+//	    			else {
+//	    				TEmpleadoInterno empInterno = (TEmpleadoInterno) emp;
+//	 	   			   	sql="INSERT INTO EmpleadosInternos(CosteFormacion,idEmpleado) VALUES ("+empInterno.getCosteFormacion()+","+emp.getIdEmpleado()+")";
+//	 	   			   	stmt.executeUpdate(sql, com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
+//		 	   			rs = stmt.getGeneratedKeys();
+//		 	   			if (rs.next()) {
+//		 	         	   //codigo = rs.getInt(1);
+//		 	            }
+//	 	   			   	
+//			 	   		sql="SELECT * FROM EmpleadosInternos WHERE idEmpleado="+emp.getIdEmpleado();
+//	        	        rs=stmt.executeQuery(sql);
+//	        	        
+//	        	        if(rs.next()) {
+//	        	        	costeFormacion = rs.getDouble("costeFormacion");
+//	    					miEmp = new TEmpleadoInterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoInterno"), idEmpleado, costeFormacion);
+//	        	        }
+//        	        
+//	    			}
 	    		}
 	    		else if(rs.getString("tipoEmpleado").equalsIgnoreCase("externo")){
 	    			
@@ -91,26 +91,26 @@ public class DAOEmpleadoImp implements DAOEmpleado {
     					duracion = rs.getInt("duracion");
     					miEmp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoExterno"), idEmpleado, duracion);
 	    	        }
-	    			else {
-	    				TEmpleadoExterno empExterno = (TEmpleadoExterno) emp;
-	 	   			   	sql="INSERT INTO EmpleadosExternos(Duracion,idEmpleado) VALUES ("+empExterno.getDuracion()+","+emp.getIdEmpleado()+")";
-	 	   			   	stmt.executeUpdate(sql, com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
-	 	   			   	
-	 	   			   	rs = stmt.getGeneratedKeys();
-		 	   			if (rs.next()) {
-		 	         	   //codigo = rs.getInt(1);
-		 	            }
-	 	   			   	
-	 	   			   	sql="SELECT * FROM EmpleadosExternos WHERE idEmpleado="+emp.getIdEmpleado();
-	        	        rs=stmt.executeQuery(sql);
-	        	        
-	        	        if(rs.next()) {
-	        	        	duracion = rs.getInt("duracion");
-	    					miEmp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoExterno"), idEmpleado, duracion);
-	        	        }
-	        	        
-	        	        
-	    			}
+//	    			else {
+//	    				TEmpleadoExterno empExterno = (TEmpleadoExterno) emp;
+//	 	   			   	sql="INSERT INTO EmpleadosExternos(Duracion,idEmpleado) VALUES ("+empExterno.getDuracion()+","+emp.getIdEmpleado()+")";
+//	 	   			   	stmt.executeUpdate(sql, com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
+//	 	   			   	
+//	 	   			   	rs = stmt.getGeneratedKeys();
+//		 	   			if (rs.next()) {
+//		 	         	   //codigo = rs.getInt(1);
+//		 	            }
+//	 	   			   	
+//	 	   			   	sql="SELECT * FROM EmpleadosExternos WHERE idEmpleado="+emp.getIdEmpleado();
+//	        	        rs=stmt.executeQuery(sql);
+//	        	        
+//	        	        if(rs.next()) {
+//	        	        	duracion = rs.getInt("duracion");
+//	    					miEmp = new TEmpleadoExterno(idEmpleado, nombre, dni, idProyecto, tipoEmpleado, activo, rs.getInt("idEmpleadoExterno"), idEmpleado, duracion);
+//	        	        }
+//	        	        
+//	        	        
+//	    			}
 	    			
 	    		}
 		        stmt.close();
@@ -232,7 +232,7 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 		   		   else if (emp.getTipoEmpleado().equalsIgnoreCase("externo")){
 		   			   TEmpleadoExterno empExt = (TEmpleadoExterno) emp;
 		   			   
-		   			   sql ="SELECT * from EmpleadosInternos WHERE idEmpleado=" + emp.getIdEmpleado();
+		   			   sql ="SELECT * from EmpleadosExternos WHERE idEmpleado=" + emp.getIdEmpleado();
 		   			   rs = stmt.executeQuery(sql);
 		   			   if(rs.next()) {
 		   				 sql="update EmpleadosExternos SET "
@@ -474,7 +474,7 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 		    		tipoEmpleado = rs.getString("tipoEmpleado");
 		    		activo = rs.getBoolean("activo");
 		       		
-	        	   if (rs.getString(5).equalsIgnoreCase("interno")){
+	        	   if (tipoEmpleado.equalsIgnoreCase("interno")){
 	        		   sql = "SELECT * FROM EmpleadosInternos WHERE idEmpleado="+rs.getInt("idEmpleado");
 	        		   rs2=stmt2.executeQuery(sql);
 	        		   if (rs2.next()){
@@ -488,7 +488,7 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	    	        	   throw new ExcepcionIntegracion("No encuentro el empleado interno al listar");
 	    	           }
 	        	   }
-	        	   else if(rs.getString(5).equalsIgnoreCase("externo")){
+	        	   else if(tipoEmpleado.equalsIgnoreCase("externo")){
 	        		   sql = "SELECT * FROM EmpleadosExternos WHERE idEmpleado="+rs.getInt("idEmpleado");
 	        		   rs2=stmt2.executeQuery(sql);
 	        		   if (rs2.next()){
@@ -509,7 +509,7 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 		       rs2.close();
 		       rs.close();
 	    }catch (Exception e){
-	    	throw new ExcepcionIntegracion("Error en listar un empleado.");
+	    	throw new ExcepcionIntegracion("Error en listar empleados.");
 	    }
 		return misEmpleados;
 	}

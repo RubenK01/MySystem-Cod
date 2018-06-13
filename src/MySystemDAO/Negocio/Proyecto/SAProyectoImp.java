@@ -49,6 +49,7 @@ public class SAProyectoImp implements SAProyecto {
 				}
 				else if (miProy != null && miProy.getActivo() == false){
 					proy.setActivo(true);
+					proy.setIdProyecto(miProy.getIdProyecto());
 					if(daoProy.updateProyecto(proy)){
 						codigo = 0;
 						t.commit();
