@@ -355,12 +355,14 @@ public class DAOEmpleadoImp implements DAOEmpleado {
 	    	        	   throw new ExcepcionIntegracion("No encuentro el empleado externo al listar");
 	    	           }
 	        	   }
+
+			       rs2.close();
+	        	   
 	           }
 	           
 		       stmt.close();
 		       stmt2.close();
 		       rs.close();
-		       rs2.close();
 	    }catch (Exception e){
 	    	throw new ExcepcionIntegracion("Error en listar un empleado.");
 	    }

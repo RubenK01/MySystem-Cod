@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.util.Collection;
 
 import javax.swing.GroupLayout;
+import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 
 import MySystemDAO.Negocio.Proyecto.TProyecto;
@@ -19,11 +20,17 @@ public class VentanaReadAllProyectosImp extends VentanaReadAllProyectos{
 	
 	@Override
 	public void update(Object data) {
-		//Collection<TProyecto> Proyectos ;
-		MyTablaProy tiModel = new MyTablaProy((Collection<TProyecto>) data);
-		TablaListarProyectos.setModel(tiModel);
-		repaint();
-		revalidate();
+		if(data != null){
+			MyTablaProy tiModel = new MyTablaProy((Collection<TProyecto>) data);
+			TablaListarProyectos.setModel(tiModel);
+			repaint();
+			revalidate();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No se encontraron registros.");
+		}
+			
+		
 		
 	}
 	

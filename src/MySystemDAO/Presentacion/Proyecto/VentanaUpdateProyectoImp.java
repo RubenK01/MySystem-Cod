@@ -97,7 +97,11 @@ public class VentanaUpdateProyectoImp extends VentanaUpdateProyecto{
     						"El campo 'Activo' es obligatorio.");
     				textFieldActivo.requestFocus();
     			}
-            	
+            	else if(textFieldActivo.getText().compareTo("true") != 0 && textFieldActivo.getText().compareTo("false") != 0) {
+            		JOptionPane.showMessageDialog(null,
+    						"El valor de Activo debe ser 'true' o 'false'.");
+            		textFieldActivo.requestFocus();
+            	}
             	else{
 	    			TProyecto trProyecto = null;
 	            	

@@ -67,7 +67,7 @@ public class VentanaCreateEmpleadoImp extends VentanaCreateEmpleado{
 		jTextFieldDNIAltaEmpleado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		jLabelDniEmpleado.setText("*DNI: ");
 		
-		lblIdProyecto = new JLabel("Id Proyecto:");
+		lblIdProyecto = new JLabel("*Id Proyecto:");
 		
 		textFieldIdProyecto = new JTextField();
 		textFieldIdProyecto.setColumns(10);
@@ -106,6 +106,11 @@ public class VentanaCreateEmpleadoImp extends VentanaCreateEmpleado{
             		JOptionPane.showMessageDialog(null,
     						"El campo 'DNI' es obligatorio.");
             		jTextFieldDNIAltaEmpleado.requestFocus();
+            	}
+            	else if (textFieldIdProyecto.getText().compareTo("") == 0){
+            		JOptionPane.showMessageDialog(null,
+    						"El campo 'Id Proyecto' es obligatorio.");
+            		textFieldIdProyecto.requestFocus();
             	}
             	else if (rdbtnInterno.isSelected() == false && rdbtnExterno.isSelected() == false){
             		JOptionPane.showMessageDialog(null,

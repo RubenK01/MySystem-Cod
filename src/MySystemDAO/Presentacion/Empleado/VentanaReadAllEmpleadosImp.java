@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JOptionPane;
 
 import MySystemDAO.Negocio.Empleado.TEmpleado;
 import MySystemDAO.Presentacion.Controlador.Contexto;
@@ -18,11 +19,16 @@ public class VentanaReadAllEmpleadosImp extends VentanaReadAllEmpleados{
 
 	@Override
 	public void update(Object data) {
-		//Collection<TEmpleado> empleados ;
-		MyTabla tiModel = new MyTabla((Collection<TEmpleado>) data);
-		TablaListarEmpleados.setModel(tiModel);
-		repaint();
-		revalidate();
+		if(data != null){
+			MyTabla tiModel = new MyTabla((Collection<TEmpleado>)data);
+			TablaListarEmpleados.setModel(tiModel);
+			repaint();
+			revalidate();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No se encontraron registros.");
+		}
+		
 		
 	}
 

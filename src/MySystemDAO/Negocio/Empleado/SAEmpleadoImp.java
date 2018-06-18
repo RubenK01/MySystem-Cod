@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import MySystemDAO.Integracion.Empleado.DAOEmpleado;
 import MySystemDAO.Integracion.ExcepcionesIntegracion.ExcepcionIntegracion;
 import MySystemDAO.Integracion.FactoriaDAO.FactoriaDAO;
+import MySystemDAO.Integracion.Proyecto.DAOProyecto;
 import MySystemDAO.Integracion.TransactionManager.TransactionManager;
 import MySystemDAO.Integracion.Transactions.Transaction;
 import MySystemDAO.Negocio.ExcepcionesNegocio.ExcepcionNegocio;
+import MySystemDAO.Negocio.Proyecto.TProyecto;
 
 /** 
  * <!-- begin-UML-doc -->
@@ -34,23 +36,45 @@ public class SAEmpleadoImp implements SAEmpleado {
 			t.start();
 			
 			DAOEmpleado daoEmp = FactoriaDAO.getInstance().createDAOEmpleado();
-			
+			DAOProyecto daoProy = FactoriaDAO.getInstance().createDAOProyecto();
 			try {
 				TEmpleado miEmp = daoEmp.readEmpleadoByDNI(emp);
 				
 				if(miEmp == null){
-					codigo = daoEmp.createEmpleado(emp);
-					t.commit();
+					TProyecto buscaProy = new TProyecto();
+					buscaProy.setIdProyecto(emp.getIdProyecto());
+					TProyecto proy = daoProy.readProyecto(buscaProy);
+					if(proy != null) {
+						codigo = daoEmp.createEmpleado(emp);
+						t.commit();
+					}
+					else {
+						t.rollback();
+						throw new ExcepcionNegocio("El Id del proyecto no existe.");
+					}
+					
 				}
 				else if (miEmp != null && miEmp.getActivo() == false){
 					emp.setActivo(true);
 					emp.setIdEmpleado(miEmp.getIdEmpleado());
-					if(daoEmp.updateEmpleado(emp)){
-						codigo = 0;
-						t.commit();
+					
+					TProyecto buscaProy = new TProyecto();
+					buscaProy.setIdProyecto(emp.getIdProyecto());
+					TProyecto proy = daoProy.readProyecto(buscaProy);
+					
+					if(proy != null) {
+						if(daoEmp.updateEmpleado(emp)){
+							codigo = 0;
+							t.commit();
+						}
+						else
+							t.rollback();
 					}
-					else
+					else {
 						t.rollback();
+						throw new ExcepcionNegocio("El Id del proyecto no existe.");
+					}				
+					
 				}
 				else{
 					codigo = -1;
@@ -107,6 +131,7 @@ public class SAEmpleadoImp implements SAEmpleado {
 			t.start();
 			
 			DAOEmpleado daoEmp = FactoriaDAO.getInstance().createDAOEmpleado();
+			DAOProyecto daoProy = FactoriaDAO.getInstance().createDAOProyecto();
 			
 			try {
 				TEmpleado miEmp = daoEmp.readEmpleado(emp);
@@ -115,13 +140,27 @@ public class SAEmpleadoImp implements SAEmpleado {
 					t.rollback();
 				}
 				else{
-					resul = daoEmp.updateEmpleado(emp);
-					if(resul){
-						t.commit();
+					
+					TProyecto buscaProy = new TProyecto();
+					buscaProy.setIdProyecto(emp.getIdProyecto());
+					TProyecto proy = daoProy.readProyecto(buscaProy);
+					
+					if(proy != null) {
+						miEmp = daoEmp.readEmpleadoByDNI(emp);
+						if(miEmp == null || miEmp.getIdEmpleado() == emp.getIdEmpleado())
+							resul = daoEmp.updateEmpleado(emp);
+						if(resul){
+							t.commit();
+						}
+						else{
+							t.rollback();
+						}
 					}
-					else{
+					else {
 						t.rollback();
+						throw new ExcepcionNegocio("El Id del proyecto no existe.");
 					}
+					
 				}				
 				
 			} catch (ExcepcionIntegracion e) {

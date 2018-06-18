@@ -5,7 +5,6 @@ package MySystemDAO.Negocio.Proyecto;
 
 import java.util.ArrayList;
 
-import MySystemDAO.Integracion.Empleado.DAOEmpleado;
 import MySystemDAO.Integracion.ExcepcionesIntegracion.ExcepcionIntegracion;
 import MySystemDAO.Integracion.FactoriaDAO.FactoriaDAO;
 import MySystemDAO.Integracion.FactoriaQuery.FactoriaQuery;
@@ -13,7 +12,6 @@ import MySystemDAO.Integracion.Proyecto.DAOProyecto;
 import MySystemDAO.Integracion.Query.Query;
 import MySystemDAO.Integracion.TransactionManager.TransactionManager;
 import MySystemDAO.Integracion.Transactions.Transaction;
-import MySystemDAO.Negocio.Empleado.TEmpleado;
 import MySystemDAO.Negocio.ExcepcionesNegocio.ExcepcionNegocio;
 
 /** 
@@ -118,7 +116,13 @@ public class SAProyectoImp implements SAProyecto {
 					t.rollback();
 				}
 				else{
-					resul = daoProy.updateProyecto(proy);
+					miProy = daoProy.readProyectoByNombre(proy);
+					
+					if(miProy == null || miProy.getIdProyecto() == proy.getIdProyecto())
+						resul = daoProy.updateProyecto(proy);
+					else {
+						throw new ExcepcionNegocio("El nombre del proyecto ya existe."); 
+					}
 					if(resul){
 						t.commit();
 					}

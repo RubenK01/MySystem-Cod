@@ -51,7 +51,7 @@ public class VentanaUpdateEmpleadoImp extends VentanaUpdateEmpleado {
 			JOptionPane.showMessageDialog(null, "El empleado se ha actualizado correctamente.");
 			PanelUpdateEmpleado.setVisible(false);
 		} else {
-			JOptionPane.showMessageDialog(null, "No se ha encontrado el empleado.");
+			JOptionPane.showMessageDialog(null, "Error al actualizar el empleado. Comprobar que el DNI no esté repetido y el id exista.");
 		}
 
 	}

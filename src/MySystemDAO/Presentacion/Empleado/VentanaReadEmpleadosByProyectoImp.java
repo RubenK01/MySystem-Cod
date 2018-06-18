@@ -25,11 +25,18 @@ public class VentanaReadEmpleadosByProyectoImp extends VentanaReadEmpleadosByPro
 
 	@Override
 	public void update(Object data) {
-		//Collection<TEmpleado> empleados ;
-		MyTabla tiModel = new MyTabla((Collection<TEmpleado>) data);
-		TablaListarEmpleadosByProyectos.setModel(tiModel);
-		repaint();
-		revalidate();
+		
+		if(data != null){
+			MyTabla tiModel = new MyTabla((Collection<TEmpleado>) data);
+			TablaListarEmpleadosByProyectos.setModel(tiModel);
+			repaint();
+			revalidate();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No se encontraron registros.");
+			PanelListarEmpleadosByProyectos.setVisible(false);
+		}
+		
 		
 	}
 

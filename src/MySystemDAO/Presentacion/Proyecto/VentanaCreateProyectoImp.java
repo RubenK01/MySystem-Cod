@@ -31,7 +31,7 @@ public class VentanaCreateProyectoImp extends VentanaCreateProyecto{
 	public void update(Object datos) {
 		if (datos != null){
 			if(((TProyecto)datos).getIdProyecto() > 0)
-				JOptionPane.showMessageDialog(null, "Empleado creado con exito con el ID: " + ((TProyecto)datos).getIdProyecto());
+				JOptionPane.showMessageDialog(null, "Proyecto creado con exito con el ID: " + ((TProyecto)datos).getIdProyecto());
 			else
 				JOptionPane.showMessageDialog(null, "El proyecto con el nombre introducido ya existía y se ha procedido a dar de alta con los nuevos datos.");
 			PanelAltaProyecto.setVisible(false);
