@@ -44,13 +44,13 @@ public class SAEmpleadoImp implements SAEmpleado {
 					TProyecto buscaProy = new TProyecto();
 					buscaProy.setIdProyecto(emp.getIdProyecto());
 					TProyecto proy = daoProy.readProyecto(buscaProy);
-					if(proy != null) {
+					if(proy != null && proy.getActivo()) {
 						codigo = daoEmp.createEmpleado(emp);
 						t.commit();
 					}
 					else {
 						t.rollback();
-						throw new ExcepcionNegocio("El Id del proyecto no existe.");
+						throw new ExcepcionNegocio("El Id del proyecto no existe o está dado de baja.");
 					}
 					
 				}
@@ -145,7 +145,7 @@ public class SAEmpleadoImp implements SAEmpleado {
 					buscaProy.setIdProyecto(emp.getIdProyecto());
 					TProyecto proy = daoProy.readProyecto(buscaProy);
 					
-					if(proy != null) {
+					if(proy != null && proy.getActivo()) {
 						miEmp = daoEmp.readEmpleadoByDNI(emp);
 						if(miEmp == null || miEmp.getIdEmpleado() == emp.getIdEmpleado())
 							resul = daoEmp.updateEmpleado(emp);
@@ -158,7 +158,7 @@ public class SAEmpleadoImp implements SAEmpleado {
 					}
 					else {
 						t.rollback();
-						throw new ExcepcionNegocio("El Id del proyecto no existe.");
+						throw new ExcepcionNegocio("El Id del proyecto no existe o está dado de baja.");
 					}
 					
 				}				

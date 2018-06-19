@@ -30,7 +30,7 @@ public class VentanaDeleteProyectoImp extends VentanaDeleteProyecto{
 			PanelDeleteProyecto.setVisible(false);
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "No existe el Proyecto buscado.");
+			JOptionPane.showMessageDialog(null, "No existe el Proyecto buscado o ya está dado de baja.");
 		}
 	}
 

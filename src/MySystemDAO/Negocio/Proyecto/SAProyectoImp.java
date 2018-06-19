@@ -5,6 +5,7 @@ package MySystemDAO.Negocio.Proyecto;
 
 import java.util.ArrayList;
 
+import MySystemDAO.Integracion.Empleado.DAOEmpleado;
 import MySystemDAO.Integracion.ExcepcionesIntegracion.ExcepcionIntegracion;
 import MySystemDAO.Integracion.FactoriaDAO.FactoriaDAO;
 import MySystemDAO.Integracion.FactoriaQuery.FactoriaQuery;
@@ -12,6 +13,7 @@ import MySystemDAO.Integracion.Proyecto.DAOProyecto;
 import MySystemDAO.Integracion.Query.Query;
 import MySystemDAO.Integracion.TransactionManager.TransactionManager;
 import MySystemDAO.Integracion.Transactions.Transaction;
+import MySystemDAO.Negocio.Empleado.TEmpleado;
 import MySystemDAO.Negocio.ExcepcionesNegocio.ExcepcionNegocio;
 
 /** 
@@ -118,8 +120,37 @@ public class SAProyectoImp implements SAProyecto {
 				else{
 					miProy = daoProy.readProyectoByNombre(proy);
 					
-					if(miProy == null || miProy.getIdProyecto() == proy.getIdProyecto())
-						resul = daoProy.updateProyecto(proy);
+					if(miProy == null || miProy.getIdProyecto() == proy.getIdProyecto()) {
+						if(!proy.getActivo()) {
+							DAOEmpleado daoEmp = FactoriaDAO.getInstance().createDAOEmpleado();
+							
+							TEmpleado emp = new TEmpleado();
+							emp.setIdProyecto(proy.getIdProyecto());
+							
+							ArrayList<TEmpleado> misEmpleados = daoEmp.readEmpleadosPorProyecto(emp);
+							
+							Boolean todosInactivos = true;
+							
+							for(TEmpleado empleado : misEmpleados) {
+								if(empleado.getActivo())
+									todosInactivos = false;
+							}
+							
+							if(todosInactivos) {
+								resul = daoProy.updateProyecto(proy);
+							}
+							else {
+								t.rollback();
+								
+								throw new ExcepcionNegocio("Hay empleados activos asignados a este proyecto.");
+							}	
+						}
+						else
+							resul = daoProy.updateProyecto(proy);
+											
+						
+					}
+						
 					else {
 						throw new ExcepcionNegocio("El nombre del proyecto ya existe."); 
 					}
@@ -157,12 +188,33 @@ public class SAProyectoImp implements SAProyecto {
 					t.rollback();
 				}
 				else{
-					resul = daoProy.deleteProyecto(proy);
+					DAOEmpleado daoEmp = FactoriaDAO.getInstance().createDAOEmpleado();
 					
-					if(resul)
-						t.commit();
-					else
+					TEmpleado emp = new TEmpleado();
+					emp.setIdProyecto(miProy.getIdProyecto());
+					
+					ArrayList<TEmpleado> misEmpleados = daoEmp.readEmpleadosPorProyecto(emp);
+					
+					Boolean todosInactivos = true;
+					
+					for(TEmpleado empleado : misEmpleados) {
+						if(empleado.getActivo())
+							todosInactivos = false;
+					}
+					
+					if(todosInactivos) {
+						resul = daoProy.deleteProyecto(proy);
+						
+						if(resul)
+							t.commit();
+						else
+							t.rollback();
+					}
+					else {
 						t.rollback();
+						
+						throw new ExcepcionNegocio("Hay empleados activos asignados a este proyecto.");
+					}
 				}
 			} catch (ExcepcionIntegracion e) {
 				throw new ExcepcionNegocio(e.getMessage());

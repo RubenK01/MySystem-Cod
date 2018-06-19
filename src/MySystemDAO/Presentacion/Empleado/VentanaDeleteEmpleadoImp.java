@@ -30,7 +30,7 @@ public class VentanaDeleteEmpleadoImp extends VentanaDeleteEmpleado {
 			PanelDeleteEmpleado.setVisible(false);
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "No existe el empleado buscado.");
+			JOptionPane.showMessageDialog(null, "No existe el empleado buscado o ya está dado de baja.");
 		}
 	}
 

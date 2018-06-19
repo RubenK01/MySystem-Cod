@@ -18,7 +18,7 @@ public class ComandoReadEmpleadosPorProyecto implements Comando {
 
 		Contexto responseContext = null;
 		
-		if(emp != null){			
+		if(emp.size() > 0){			
 			responseContext = new Contexto(EventoNegocio.READ_EMPLEADOS_BY_PROYECTO, emp);
 		}
 		else{
